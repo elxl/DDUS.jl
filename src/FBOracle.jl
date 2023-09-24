@@ -5,7 +5,7 @@
 
 export FBOracle
 
-type FBOracle <: AbstractOracle
+struct FBOracle <: AbstractOracle
     mfs::Vector{Float64}
     mbs::Vector{Float64}
     sigfs::Vector{Float64}
