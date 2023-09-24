@@ -9,13 +9,13 @@ export LCXOracle
 #returns bool, violated ab_cut
 #Solves 4 LPs
 function ab_cut_(us, vs, z, data, eps_, solver, CASE)
-    const TOL = 1e-6
+    local TOL = 1e-6
     m = solver==nothing ? Model() : Model(solver=solver)
     @defVar(m, a[1:size(data, 2)])
     @defVar(m, b)
 
     #define the RHS
-    const N = size(data, 1); const d = size(data, 2)
+    local N = size(data, 1); local d = size(data, 2)
     @defVar(m, t[1:N] >= 0)
     for i = 1:N
         @addConstraint(m, t[i] >= z*(dot(a, vec(data[i, :])) - b)/N)
@@ -93,7 +93,7 @@ function suppFcnLCX(xs, data, eps_, Gamma, cut_sense;
                     lbounds=Float64[], ubounds=Float64[], 
                     TOL=1e-6, MAXITER=1000, trace=false, outer_solver=nothing, abcut_solver=nothing)
     #assign bounds if the user didn't give em
-    const d = size(data, 2)
+    local d = size(data, 2)
     data_max = maximum(abs(data))
 
     m = outer_solver==nothing ? Model() : Model(solver=outer_solver)

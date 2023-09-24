@@ -5,7 +5,7 @@ export UMOracle
 
 #returns zstar, ustar
 function suppFcnUM(xs, lquants, uquants, cut_sense=:Max)
-    const d = length(lquants)
+    local d = length(lquants)
 
     zstar = 0.0
     for i in 1:d
