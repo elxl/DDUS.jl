@@ -10,7 +10,7 @@ export boot_mu, boot_sigma, bootDY_mu, bootDY_sigma, calc_ab_thresh
 ###Bootstrapping code
 # ideally this should all be moved to some base level function
 function boot(data::Vector, fun::Function, prob::Float64, numBoots::Int, f_args...)
-	const N = size(data, 1)
+	local N = size(data, 1)
 	dist = DiscreteUniform(1, N)
 	out = zeros(Float64, numBoots)
 	indices = collect(1:N)
@@ -22,7 +22,7 @@ function boot(data::Vector, fun::Function, prob::Float64, numBoots::Int, f_args.
 end
 
 function boot(data::Matrix, fun::Function, prob::Float64, numBoots::Int, f_args...)
-	const N = size(data, 1)
+	local N = size(data, 1)
 	dist = DiscreteUniform(1, N)
 	out = zeros(Float64, numBoots)
 	indices = collect(1:N)
@@ -91,8 +91,8 @@ end
 #Sgn of guess encodes whether we are looking at Fwd or Backwd
 function sigFwdBack(data, guess, trace=false)
     #adjust things for stability
-    const b = guess > 0 ? maximum(data) : minimum(data)
-    const mu_adj = mean(data)-b
+    local b = guess > 0 ? maximum(data) : minimum(data)
+    local mu_adj = mean(data)-b
     data_b = data-b
 
     df_sig_(x) = df_sig(x, mu_adj, data_b)
@@ -124,8 +124,8 @@ end
 # if joint, bounds hold (jointly) simultaneously at level 1-alpha_
 # o.w. bounds hold individually at level 1-alpha_
 function calcMeansT(data, alpha_; joint=true)
-    const N   = length(data)
-    const sig_rt_N = std(data)/sqrt(N)
+    local N   = length(data)
+    local sig_rt_N = std(data)/sqrt(N)
     dist      = TDist(N-1)
     alpha = joint ? alpha_/2 : alpha_
     mean(data) + quantile(dist, alpha)*sig_rt_N, mean(data) + quantile(dist, 1-alpha)*sig_rt_N
@@ -134,22 +134,22 @@ end
 #Currently computed using Stephens Approximation 
 #Journaly of Royal Statistical Society 1970
 function KSGamma(alpha, N) 
-       const sqrt_N = sqrt(N)
-       const num = sqrt(.5 * log(2/alpha))
-       const denom = sqrt_N + .12 + .11/sqrt_N
+       local sqrt_N = sqrt(N)
+       local num = sqrt(.5 * log(2/alpha))
+       local denom = sqrt_N + .12 + .11/sqrt_N
        num/denom
 end
 
 kappa(eps_) = sqrt(1./eps_ - 1.)
 
 function boot_mu(data, alpha, numBoots)
-    const muhat = mean(data, 1)
+    local muhat = mean(data, 1)
     myfun(data_b) = norm(mean(data_b, 1) - muhat)
     boot(data, myfun, 1-alpha, numBoots)
 end
 
 function boot_sigma(data, alpha, numBoots)
-    const covhat = cov(data)
+    local covhat = cov(data)
     myfun(data_b) = vecnorm(cov(data_b) - covhat)
     boot(data, myfun, 1-alpha, numBoots)
 end
@@ -186,7 +186,7 @@ function bootDY_sigma(data, alpha, numBoots)
             if f(1) < 0
                 lb = 1; ub = 2
                 iter = 0
-                const MAX_ITER = 100
+                local MAX_ITER = 100
                 while f(ub) < 0 && iter < MAX_ITER
                     println("$iter \t $(f(ub))")
                     lb = ub
@@ -196,7 +196,7 @@ function bootDY_sigma(data, alpha, numBoots)
             else
                 lb = .5; ub = 1
                 iter = 0
-                const MAX_ITER = 100
+                local MAX_ITER = 100
                 while f(lb) > 0 && iter < MAX_ITER
                     ub = lb
                     lb = lb * .5
@@ -221,7 +221,7 @@ end
 ### Used by UM and UIOracle
 function sort_data_cols(data)
     data_sort = zeros(eltype(data), size(data))
-    const d = size(data, 2)
+    local d = size(data, 2)
     for i = 1:d
         data_sort[:, i] = sort(data[:, i])
     end
@@ -258,7 +258,7 @@ function singlepass!(zetas::Vector, zetahats::Vector)
     vb::Float64    = mean(zetahats) - zetas[1]
 
     Gamma::Float64 = vstar - vb
-    const N::Int64 = length(zetas)
+    local N::Int64 = length(zetas)
     pbar::Float64    = 1.0 
     hat_indx::Int64  = 1
     hat_indx_::Int64 = 0
@@ -294,8 +294,8 @@ end
 
 #Approximates the threshold by sampling a bunch of abs for each bootstrap rep
 function calc_ab_thresh(data::Matrix, alpha::Float64, numBoots::Int, numSamples::Int)
-    const N = size(data, 1)
-    const d = size(data, 2)
+    local N = size(data, 1)
+    local d = size(data, 2)
     a::Vector{Float64} = zeros(Float64, d)
     sgns::Vector{Int}  = zeros(Int64, d)
     boot(data, f2, 1-alpha, numBoots, data, numSamples, a, sgns)
