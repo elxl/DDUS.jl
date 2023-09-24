@@ -140,7 +140,7 @@ function KSGamma(alpha, N)
        num/denom
 end
 
-kappa(eps_) = sqrt(1./eps_ - 1.)
+kappa(eps_) = sqrt(1. /eps_ - 1.)
 
 function boot_mu(data, alpha, numBoots)
     local muhat = mean(data, 1)
