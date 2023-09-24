@@ -8,7 +8,7 @@ module DDUS
 using JuMP
 using Compat
 import JuMPeR
-import JuMPeR: AbstractOracle, registerConstraint, setup, generateCut, generateReform
+import JuMPeR: AbstractUncertaintySet
 
 
 include("helpers.jl")

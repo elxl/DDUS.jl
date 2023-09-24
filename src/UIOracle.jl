@@ -4,7 +4,7 @@
 
 export UIOracle
 
-type UIOracle <: AbstractOracle
+struct UIOracle <: AbstractUncertaintySet
     lbounds::Vector{Float64}
     ubounds::Vector{Float64}
     data_sort::Matrix{Float64}

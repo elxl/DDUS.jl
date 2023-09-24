@@ -8,7 +8,7 @@ using JuMP, Mosek  #Right now SDPs require Mosek
 
 export UDYOracle
 
-type UDYOracle <: AbstractOracle
+struct UDYOracle <: AbstractUncertaintySet
     eps_::Float64
     gamma1::Float64
     gamma2::Float64
