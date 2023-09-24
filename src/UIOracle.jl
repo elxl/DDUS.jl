@@ -57,9 +57,9 @@ function suppFcnUI(xs, data_sort, lbounds, ubounds,
         sgn_flip = -1
     end
 
-    const N = size(data_sort, 1)
-    const d = size(data_sort, 2)
-    const Gamma = qL[1]
+    local N = size(data_sort, 1)
+    local d = size(data_sort, 2)
+    local Gamma = qL[1]
 
     if is_degen(d, Gamma, log_eps)
         ustar = degen_case(xs, lbounds, ubounds)
