@@ -149,7 +149,7 @@ function suppFcnLCX(xs, data, eps_, Gamma, cut_sense;
 end
 
 ########################
-type LCXOracle <: AbstractUncertaintySet
+type LCXOracle <: AbstractOracle
     data::Array{Float64, 2}
     eps_::Float64
     Gamma::Float64

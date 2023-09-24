@@ -34,7 +34,7 @@ function calc_s(data, eps_, alpha)
 end
 
 ######################
-struct UMOracle <: AbstractUncertaintySet
+struct UMOracle <: AbstractOracle
     lquants::Vector{Float64}
     uquants::Vector{Float64}
     cut_tol::Float64  ##defaults to 1e-6
