@@ -32,7 +32,7 @@ function UCSOracle(muhat, covhat, Gamma1, Gamma2, eps_)
 end
 
 function UCSOracle(data, eps_, alpha1, alpha2; numBoots=10000)
-    muhat  = vec(mean(data, 1))
+    muhat  = vec(mean(data, dims=1))
     covhat = cov(data)
     Gamma1 = boot_mu(data, alpha1, numBoots)
     Gamma2 = boot_sigma(data, alpha2, numBoots)
