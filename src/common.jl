@@ -2,14 +2,14 @@
 Generalized versions of the JuMPeR interface
 Delegates to correct cutting plane algorithm via suppFcn
 =#
-typealias DDUSOracles Union{UMOracle, UIOracle, FBOracle, LCXOracle, UCSOracle}
+DDUSOracles = Union{UMOracle, UIOracle, FBOracle, LCXOracle, UCSOracle}
 
 # JuMPeR alerting us that we're handling this contraint
 registerConstraint(w::DDUSOracles, rm::Model, ind::Int, prefs) =
     !get(prefs, :prefer_cuts, true) && error("Only cutting plane supported")
 
 # JuMPeR wants us to generate a constraint for every uncertain constraint in inds
-function generateCut(w::DDUSOracles, m::Model, rm::Model, inds::Vector{Int}, active=false)
+function generate_cut(w::DDUSOracles, m::Model, rm::Model, inds::Vector{Int}, active=false)
     new_cons = Any[]
     rd = JuMPeR.getRobust(rm)
     for ind in inds
@@ -41,4 +41,4 @@ function generateCut(w::DDUSOracles, m::Model, rm::Model, inds::Vector{Int}, act
 end
 
 # JuMPeR asking us for any reformulations we might want to make - we make none
-generateReform(w::DDUSOracles, m::Model, rm::Model, inds::Vector{Int}) = 0
+generate_reform(w::DDUSOracles, m::Model, rm::Model, inds::Vector{Int}) = 0
