@@ -16,7 +16,7 @@ export suppFcn
 include("FBOracle.jl")
 include("UIOracle.jl")
 include("UCSOracle.jl")
-include("LCXOracle.jl")
+# include("LCXOracle.jl") # Constraint error
 include("UMOracle.jl")
 #include("UDYOracle.jl")  #Needs SDP support in JuMPeR ...  add later
 
