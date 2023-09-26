@@ -5,7 +5,7 @@
 
 export FBOracle
 
-struct FBOracle <: AbstractOracle
+struct FBOracle <: AbstractUncertaintySet
     mfs::Vector{Float64}
     mbs::Vector{Float64}
     sigfs::Vector{Float64}

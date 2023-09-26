@@ -6,7 +6,7 @@ import JuMP.UnsetSolver  #remove this dependence
 
 export UCSOracle
 
-struct UCSOracle <: AbstractOracle
+struct UCSOracle <: AbstractUncertaintySet
     eps_kappa::Float64
     Gamma1::Float64
     Gamma2::Float64
