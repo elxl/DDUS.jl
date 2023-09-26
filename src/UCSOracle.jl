@@ -40,7 +40,9 @@ function UCSOracle(data, eps_, alpha1, alpha2; numBoots=10000)
 end
 
 #preferred interface
-UCSOracle(data, eps_, alpha; numBoots=10000) = UCSOracle(data, eps_, alpha/2, alpha/2, numBoots=numBoots)
+function UCSOracle(data, eps_, alpha; numBoots=10000)
+    UCSOracle(data, eps_, alpha/2, alpha/2, numBoots=numBoots)
+end
 
 #the supp fcn when support = Rd
 function suppFcnUCSRd(xs, muhat, Gamma1, covbar, eps_k, cut_sense=:Max)
